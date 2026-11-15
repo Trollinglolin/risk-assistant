@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/Trollinglolin/riak-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/Trollinglolin/riak-assistant/actions/workflows/ci.yml)
 
+**Live demo:** https://hkrisk.jollymushroom-951ccee3.francecentral.azurecontainerapps.io (scales to zero, so the first load after idle can take up to a minute. The risk dashboard is public; the chat needs an access key because it spends LLM quota.)
+
 A tested Python VaR / ES / GARCH / EVT engine for a portfolio of Hong Kong equities, with
 backtests (Kupiec, Christoffersen, Basel traffic light), risk attribution, stress tests, a
 FastAPI service, and an LLM agent that answers risk questions **only through tool calls** to
@@ -292,6 +294,36 @@ rate limits, deny-by-default tool-argument validation, audit logging, secrets fr
 SHA-pinned CI with gitleaks and dependency audits, and a non-root, read-only-filesystem container.
 
 ## Deploy and daily report
+
+**Hosted on Azure Container Apps** (`infra/azure/deploy.sh`, re-runnable). One container serves
+the API and the built dashboard on the same HTTPS origin, so there's no CORS. Strict CSP, HSTS
+and an HTTP→HTTPS redirect are on.
+
+- **Image:** built for linux/amd64 and pushed to Azure Container Registry. The app pulls it with
+  its system-assigned managed identity, so no registry password exists.
+- **Secrets:** the Gemini key and agent key are Container Apps secrets, read from `.env` at deploy
+  time and never printed or baked into the image.
+- **Scaling:** 0 to 2 replicas (1 vCPU / 2 GiB), HTTP-concurrency autoscaling, plus a USD 10/month
+  budget alert on the resource group.
+- **Azure for Students limits** shaped the setup: regions are limited to a few in the EU (France
+  Central is used), ACR Tasks cloud builds are blocked (the image is built locally with buildx
+  under amd64 emulation), and there's one Container Apps environment per subscription (the app
+  shares an existing environment via `ENV_ID`).
+
+Turn the hosting on and off to save credit:
+
+```bash
+infra/azure/hosting.sh off      # stop the app: no compute charges, site offline
+infra/azure/hosting.sh on       # start again (about 40 s until it serves)
+infra/azure/hosting.sh status
+```
+
+When it's on but idle, the app scales to zero and uses almost no compute. The container
+registry (about USD 5/month) keeps billing in both states.
+
+The AWS path below (Lambda + S3 + EventBridge) uses the same image and is documented in
+`infra/deploy.md`. The daily report job has not been moved to Azure yet.
+
 
 - CI: `.github/workflows/ci.yml` runs ruff and pytest with no network or keys. `eval.yml` runs the eval manually.
 - Docker: `Dockerfile` targets `api` (Lambda Web Adapter) and `report` (`hkrisk.report.handler`).

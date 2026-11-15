@@ -59,6 +59,11 @@ if origins := [o.strip() for o in os.getenv("HKRISK_CORS_ORIGINS", "").split(","
 # URL, ALB, CloudFront) set HKRISK_TRUST_PROXY=1: the client IP is then the LAST
 # X-Forwarded-For hop, the one the proxy appended. Earlier hops are client-controlled.
 IP_LIMIT = int(os.getenv("HKRISK_IP_RATE_LIMIT_PER_MIN", "120"))
+# The dashboard is same-origin with the API, has no inline scripts and loads nothing external.
+# Recharts sets inline style attributes, hence 'unsafe-inline' for styles only.
+CSP = ("default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; "
+       "img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; "
+       "base-uri 'self'; form-action 'self'; frame-ancestors 'none'")
 _ip_hits: dict[str, deque] = defaultdict(deque)
 
 
@@ -84,8 +89,15 @@ async def guard(request: Request, call_next):
     resp.headers["X-Content-Type-Options"] = "nosniff"
     resp.headers["X-Frame-Options"] = "DENY"
     resp.headers["Referrer-Policy"] = "no-referrer"
-    resp.headers["Cache-Control"] = "no-store" if request.url.path.startswith("/agent") \
-        else "public, max-age=300"
+    path = request.url.path
+    if not path.startswith(("/docs", "/redoc")):  # Swagger UI loads from a CDN
+        resp.headers["Content-Security-Policy"] = CSP
+    if path.startswith("/agent"):
+        resp.headers["Cache-Control"] = "no-store"
+    elif path.startswith("/assets/"):  # content-hashed dashboard bundles
+        resp.headers["Cache-Control"] = "public, max-age=31536000, immutable"
+    else:
+        resp.headers["Cache-Control"] = "public, max-age=300"
     if request.url.scheme == "https" or request.headers.get("x-forwarded-proto") == "https":
         resp.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
     return resp
@@ -241,3 +253,13 @@ def agent_ask(req: AskRequest, request: Request, key_fp: str = Depends(require_k
              sum(c.is_error for c in r.tool_calls), r.iterations, r.input_tokens,
              r.output_tokens, r.latency_s)
     return r.to_dict()
+
+
+# ---------------- dashboard (same origin) ----------------
+# When HKRISK_STATIC_DIR points at the built dashboard (dashboard/dist, baked into the
+# container image), serve it at "/". Registered last so every API route above wins.
+_static = os.getenv("HKRISK_STATIC_DIR")
+if _static and os.path.isdir(_static):
+    from fastapi.staticfiles import StaticFiles
+
+    app.mount("/", StaticFiles(directory=_static, html=True), name="dashboard")

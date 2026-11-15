@@ -153,3 +153,9 @@ def test_ssm_loader_only_sets_allowlisted_names(monkeypatch):
     assert load_ssm_env("/hkrisk/", client=FakeSSM()) == ["GEMINI_API_KEY"]
     import os
     assert os.environ["GEMINI_API_KEY"] == "g" and os.environ.get("PATH") != "/evil"
+
+
+def test_csp_on_api_and_dashboard_responses(client):
+    csp = client.get("/health").headers["content-security-policy"]
+    assert "script-src 'self'" in csp and "frame-ancestors 'none'" in csp
+    assert "unsafe-eval" not in csp

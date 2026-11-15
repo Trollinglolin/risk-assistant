@@ -19,7 +19,8 @@ export function Chat({ pf }: { pf: PortfolioId }) {
   const [turns, setTurns] = useState<Turn[]>([])
   const [text, setText] = useState('')
   const [busy, setBusy] = useState(false)
-  const [needKey, setNeedKey] = useState(false)
+  // hosted build: no dev proxy adds the key, so ask for it up front
+  const [needKey, setNeedKey] = useState(import.meta.env.PROD && !getStoredKey())
   const end = useRef<HTMLDivElement>(null)
 
   useEffect(() => { end.current?.scrollIntoView({ block: 'end' }) }, [turns, busy])
@@ -140,7 +141,7 @@ function KeyField({ onSave }: { onSave: () => void }) {
     <form className="flex items-center gap-2 border-t border-line px-3 py-2"
       onSubmit={(e) => { e.preventDefault(); setStoredKey(k.trim()); onSave() }}>
       <Key size={16} className="text-muted" />
-      <label htmlFor="key" className="text-[13px] text-ink-2">API key</label>
+      <label htmlFor="key" className="text-[13px] text-ink-2" title="The assistant uses a rate-limited LLM quota, so it needs an access key. The risk panels are open to everyone.">Access key</label>
       <input id="key" type="password" value={k} onChange={(e) => setK(e.target.value)}
         className="flex-1 rounded border border-line bg-raised px-2 py-1 text-[13px] text-ink outline-none focus:border-accent" />
       <button className="rounded-md border border-line px-2.5 py-1 text-[13px] text-ink hover:border-accent">Save</button>

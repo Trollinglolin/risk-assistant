@@ -5,7 +5,8 @@
 evals/results
 reports
 docs/*.parquet
-dashboard
+dashboard/node_modules
+dashboard/dist
 data/prices_*.parquet
 .env.*
 !.env.example

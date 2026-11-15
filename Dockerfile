@@ -4,6 +4,15 @@
 # No secrets are baked in: LLM keys and HKRISK_API_KEY come from SSM / Secrets Manager at run
 # time (infra/deploy.md). Lambda's filesystem is read-only except /tmp, so every cache points
 # there.
+# ---- dashboard: static build, served same-origin by the API image ----
+FROM node:22-bookworm-slim AS dashboard
+WORKDIR /dash
+COPY dashboard/package.json dashboard/package-lock.json ./
+RUN npm ci --ignore-scripts --no-audit --no-fund
+COPY dashboard/ ./
+# empty API base = same origin as the page
+RUN VITE_API_BASE= npm run build
+
 FROM python:3.12-slim AS base
 COPY --from=ghcr.io/astral-sh/uv:0.13.1 /uv /usr/local/bin/uv
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy UV_PROJECT_ENVIRONMENT=/app/.venv \
@@ -21,9 +30,12 @@ RUN uv sync --locked --no-dev \
  && useradd --uid 10001 --no-create-home --shell /usr/sbin/nologin app
 
 FROM base AS api
+# The Lambda Web Adapter is inert outside Lambda; the same image runs on Azure Container Apps.
 COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.9.1 /lambda-adapter /opt/extensions/lambda-adapter
-# behind the Function URL: trust its X-Forwarded-For hop; hide /docs unless HKRISK_DOCS=1
-ENV PORT=8080 AWS_LWA_READINESS_CHECK_PATH=/health HKRISK_TRUST_PROXY=1 HKRISK_DOCS=0
+COPY --from=dashboard /dash/dist /app/web
+# behind the platform proxy: trust its X-Forwarded-For hop; hide /docs unless HKRISK_DOCS=1
+ENV PORT=8080 AWS_LWA_READINESS_CHECK_PATH=/health HKRISK_TRUST_PROXY=1 HKRISK_DOCS=0 \
+    HKRISK_STATIC_DIR=/app/web
 USER 10001
 CMD ["uvicorn", "hkrisk.api.main:app", "--host", "0.0.0.0", "--port", "8080", "--no-server-header"]
 

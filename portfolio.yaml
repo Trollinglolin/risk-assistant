@@ -1,0 +1,12 @@
+# Holdings in shares. Board lots respected. Prices are HKD.
+currency: HKD
+holdings:
+  "0700.HK": 2000   # Tencent        - tech
+  "3690.HK": 3000   # Meituan        - tech (listed Sep 2018 -> proxied in 2008)
+  "0005.HK": 8000   # HSBC           - bank
+  "0939.HK": 60000  # CCB            - bank
+  "1299.HK": 6000   # AIA            - insurance (listed Oct 2010 -> proxied in 2008)
+  "0388.HK": 1000   # HKEX           - financials
+  "0016.HK": 4000   # SHK Properties - property
+  "0941.HK": 4000   # China Mobile   - telecom
+  "2800.HK": 20000  # Tracker Fund   - ETF

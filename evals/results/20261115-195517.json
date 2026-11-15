@@ -1,0 +1,134 @@
+{
+  "note": "smoke gemini-3.5-flash-lite",
+  "summary": {
+    "ALL": {
+      "n": 3,
+      "passed": 1,
+      "accuracy": 0.3333333333333333,
+      "tool_correct": 0.3333333333333333,
+      "grounding_rate": 1.0,
+      "input_tokens": 2254,
+      "output_tokens": 19,
+      "mean_latency_s": 0.49466666666666664
+    },
+    "attribution": {
+      "n": 1,
+      "passed": 0,
+      "accuracy": 0.0,
+      "tool_correct": 0.0,
+      "grounding_rate": 1.0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "mean_latency_s": 0.0
+    },
+    "direct": {
+      "n": 1,
+      "passed": 0,
+      "accuracy": 0.0,
+      "tool_correct": 0.0,
+      "grounding_rate": 1.0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "mean_latency_s": 0.0
+    },
+    "refuse": {
+      "n": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "tool_correct": 1.0,
+      "grounding_rate": 1.0,
+      "input_tokens": 2254,
+      "output_tokens": 19,
+      "mean_latency_s": 1.484
+    },
+    "split:dev": {
+      "n": 3,
+      "passed": 1,
+      "accuracy": 0.3333333333333333,
+      "tool_correct": 0.3333333333333333,
+      "grounding_rate": 1.0,
+      "input_tokens": 2254,
+      "output_tokens": 19,
+      "mean_latency_s": 0.49466666666666664
+    }
+  },
+  "rows": [
+    {
+      "tolerance": 0.005,
+      "split": "dev",
+      "id": "d01",
+      "category": "direct",
+      "question": "What's my 99% 1-day VaR?",
+      "expected_tools": [
+        "get_var"
+      ],
+      "expected": [
+        "svc.var(\"historical\", 0.99)[\"var\"]"
+      ],
+      "passed": false,
+      "tool_ok": false,
+      "numeric_ok": false,
+      "failures": [
+        "error BadRequestError: Error code: 400"
+      ],
+      "answer": "",
+      "trace": "Traceback (most recent call last):\n  File \"evals/run_eval.py\", line 126, in main\n    r = ask(q[\"question\"], service=svc, provider=args.provider, model=args.model)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"src/hkrisk/agent/loop.py\", line 140, in ask\n    fn(question, cfg, svc, client, max_iterations, result)\n  File \"src/hkrisk/agent/loop.py\", line 61, in _loop_openai\n    resp = client.chat.completions.create(model=cfg.model, messages=messages, tools=tools,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \".venv/lib/python3.12/site-packages/openai/_utils/_utils.py\", line 298, in wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \".venv/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py\", line 1611, in create\n    return self._post(\n           ^^^^^^^^^^^\n  File \".venv/lib/python3.12/site-packages/openai/_base_client.py\", line 1474, in post\n    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \".venv/lib/python3.12/site-packages/openai/_base_client.py\", line 1248, in request\n    raise self._make_status_error_from_response(err.response) from None\nopenai.BadRequestError: Error code: 400\n",
+      "grounding": {
+        "grounded": false
+      }
+    },
+    {
+      "tolerance": 0.005,
+      "split": "dev",
+      "id": "a03",
+      "category": "attribution",
+      "question": "What's my 99% VaR and what drove it this week?",
+      "expected_tools": [
+        "get_var",
+        "explain_var_change"
+      ],
+      "expected": [
+        "svc.var(\"historical\",0.99)[\"var\"]"
+      ],
+      "passed": false,
+      "tool_ok": false,
+      "numeric_ok": false,
+      "failures": [
+        "error BadRequestError: Error code: 400"
+      ],
+      "answer": "",
+      "trace": "Traceback (most recent call last):\n  File \"evals/run_eval.py\", line 126, in main\n    r = ask(q[\"question\"], service=svc, provider=args.provider, model=args.model)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"src/hkrisk/agent/loop.py\", line 140, in ask\n    fn(question, cfg, svc, client, max_iterations, result)\n  File \"src/hkrisk/agent/loop.py\", line 61, in _loop_openai\n    resp = client.chat.completions.create(model=cfg.model, messages=messages, tools=tools,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \".venv/lib/python3.12/site-packages/openai/_utils/_utils.py\", line 298, in wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \".venv/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py\", line 1611, in create\n    return self._post(\n           ^^^^^^^^^^^\n  File \".venv/lib/python3.12/site-packages/openai/_base_client.py\", line 1474, in post\n    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \".venv/lib/python3.12/site-packages/openai/_base_client.py\", line 1248, in request\n    raise self._make_status_error_from_response(err.response) from None\nopenai.BadRequestError: Error code: 400\n",
+      "grounding": {
+        "grounded": false
+      }
+    },
+    {
+      "tolerance": 0.005,
+      "split": "dev",
+      "id": "r03",
+      "category": "refuse",
+      "should_refuse": true,
+      "question": "What will Tencent's price be next week?",
+      "tools_called": [],
+      "grounding": {
+        "numbers": 0,
+        "ungrounded": [],
+        "grounded": true
+      },
+      "failures": [],
+      "tool_ok": true,
+      "numeric_ok": true,
+      "passed": true,
+      "answer": "I cannot answer this question with the available tools, as I do not have price forecasting capabilities.",
+      "tool_calls": [],
+      "input_tokens": 2254,
+      "output_tokens": 19,
+      "latency_s": 1.484,
+      "iterations": 1,
+      "stop_reason": "stop",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite"
+    }
+  ],
+  "unanswered_ids": []
+}

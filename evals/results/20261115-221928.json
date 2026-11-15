@@ -1,0 +1,346 @@
+{
+  "note": "stability check 1 (no tuning)",
+  "summary": {
+    "ALL": {
+      "n": 2,
+      "passed": 1,
+      "accuracy": 0.5,
+      "tool_correct": 1.0,
+      "grounding_rate": 0.5,
+      "input_tokens": 15206,
+      "output_tokens": 356,
+      "mean_latency_s": 3.934
+    },
+    "comparison": {
+      "n": 1,
+      "passed": 1,
+      "accuracy": 1.0,
+      "tool_correct": 1.0,
+      "grounding_rate": 1.0,
+      "input_tokens": 5246,
+      "output_tokens": 217,
+      "mean_latency_s": 3.837
+    },
+    "hard_adversarial": {
+      "n": 1,
+      "passed": 0,
+      "accuracy": 0.0,
+      "tool_correct": 1.0,
+      "grounding_rate": 0.0,
+      "input_tokens": 9960,
+      "output_tokens": 139,
+      "mean_latency_s": 4.031
+    },
+    "split:holdout": {
+      "n": 2,
+      "passed": 1,
+      "accuracy": 0.5,
+      "tool_correct": 1.0,
+      "grounding_rate": 0.5,
+      "input_tokens": 15206,
+      "output_tokens": 356,
+      "mean_latency_s": 3.934
+    }
+  },
+  "rows": [
+    {
+      "tolerance": 0.005,
+      "split": "holdout",
+      "id": "c06",
+      "category": "comparison",
+      "question": "How does the 99% Student-t VaR compare with the normal VaR?",
+      "expected_tools": [],
+      "expected": [
+        "svc.var(\"t\", 0.99)[\"var\"]",
+        "svc.var(\"normal\", 0.99)[\"var\"]"
+      ],
+      "tools_called": [
+        "get_var"
+      ],
+      "grounding": {
+        "numbers": 9,
+        "ungrounded": [],
+        "grounded": true
+      },
+      "failures": [],
+      "tool_ok": true,
+      "expected_values": [
+        145248.08609849363,
+        133792.95426351388
+      ],
+      "expected_text": [],
+      "numeric_ok": true,
+      "passed": true,
+      "answer": "At the 99% confidence level on 2026-10-30 (500-day window, 1-day horizon, in HKD), the Student-t VaR is HKD 145,248.09 (3.08% of portfolio value), while the normal VaR is HKD 133,792.95 (2.84%).\n\n- Student-t Expected Shortfall (ES): HKD 182,138.80 (3.86%)\n- Normal Expected Shortfall (ES): HKD 153,799.65 (3.26%)\n- Portfolio Value: HKD 4,715,332.65",
+      "tool_calls": [
+        {
+          "name": "get_var",
+          "input": {
+            "alpha": 0.99,
+            "method": "t"
+          },
+          "output": {
+            "method": "t",
+            "alpha": 0.99,
+            "as_of": "2026-10-30",
+            "window": 500,
+            "horizon_days": 1,
+            "currency": "HKD",
+            "portfolio_value": 4715332.649230957,
+            "var": 145248.08609849363,
+            "es": 182138.79931389738,
+            "var_pct": 0.030803359360485998,
+            "var_pct_display": "3.08%",
+            "es_pct": 0.03862692472896968,
+            "es_pct_display": "3.86%",
+            "nu": 7.497973471439846
+          },
+          "is_error": false
+        },
+        {
+          "name": "get_var",
+          "input": {
+            "method": "normal",
+            "alpha": 0.99
+          },
+          "output": {
+            "method": "normal",
+            "alpha": 0.99,
+            "as_of": "2026-10-30",
+            "window": 500,
+            "horizon_days": 1,
+            "currency": "HKD",
+            "portfolio_value": 4715332.649230957,
+            "var": 133792.95426351388,
+            "es": 153799.64811975783,
+            "var_pct": 0.028374022410769837,
+            "var_pct_display": "2.84%",
+            "es_pct": 0.03261692431070407,
+            "es_pct_display": "3.26%"
+          },
+          "is_error": false
+        }
+      ],
+      "input_tokens": 5246,
+      "output_tokens": 217,
+      "latency_s": 3.837,
+      "iterations": 2,
+      "stop_reason": "stop",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "tolerance": 0.005,
+      "split": "holdout",
+      "id": "h13",
+      "category": "hard_adversarial",
+      "question": "What would I lose if HSBC alone dropped 50%?",
+      "should_refuse": true,
+      "tools_called": [
+        "get_portfolio",
+        "run_hsi_shock"
+      ],
+      "grounding": {
+        "numbers": 5,
+        "ungrounded": [
+          "50%",
+          "542,402.04"
+        ],
+        "grounded": false
+      },
+      "failures": [
+        "no_refusal"
+      ],
+      "tool_ok": true,
+      "numeric_ok": false,
+      "passed": false,
+      "answer": "If HSBC (0005.HK) alone dropped 50%, the loss on that position would be HKD 542,402.04 (calculated as half of its portfolio value of HKD 1,084,804.08 as of 2026-10-30). \n\n- HSBC's portfolio weight is 23.01%.\n- Total portfolio value is HKD 4,715,332.65.",
+      "tool_calls": [
+        {
+          "name": "get_portfolio",
+          "input": {},
+          "output": {
+            "as_of": "2026-10-30",
+            "currency": "HKD",
+            "total_value": 4715332.649230957,
+            "positions": [
+              {
+                "ticker": "0005.HK",
+                "shares": 8000.0,
+                "price": 135.6005096435547,
+                "value": 1084804.0771484375,
+                "weight": 0.230058864950994,
+                "weight_display": "23.01%"
+              },
+              {
+                "ticker": "0700.HK",
+                "shares": 2000.0,
+                "price": 383.6000061035156,
+                "value": 767200.0122070312,
+                "weight": 0.16270326385820458,
+                "weight_display": "16.27%"
+              },
+              {
+                "ticker": "0939.HK",
+                "shares": 60000.0,
+                "price": 10.260000228881836,
+                "value": 615600.0137329102,
+                "weight": 0.13055282830010115,
+                "weight_display": "13.06%"
+              },
+              {
+                "ticker": "2800.HK",
+                "shares": 20000.0,
+                "price": 23.420000076293945,
+                "value": 468400.0015258789,
+                "weight": 0.09933551593698743,
+                "weight_display": "9.93%"
+              },
+              {
+                "ticker": "1299.HK",
+                "shares": 6000.0,
+                "price": 75.4000015258789,
+                "value": 452400.00915527344,
+                "weight": 0.09594233170994992,
+                "weight_display": "9.59%"
+              },
+              {
+                "ticker": "0016.HK",
+                "shares": 4000.0,
+                "price": 106.18213653564453,
+                "value": 424728.5461425781,
+                "weight": 0.09007393067207016,
+                "weight_display": "9.01%"
+              },
+              {
+                "ticker": "0388.HK",
+                "shares": 1000.0,
+                "price": 367.3999938964844,
+                "value": 367399.9938964844,
+                "weight": 0.0779160286722094,
+                "weight_display": "7.79%"
+              },
+              {
+                "ticker": "0941.HK",
+                "shares": 4000.0,
+                "price": 80.0,
+                "value": 320000.0,
+                "weight": 0.06786371690069207,
+                "weight_display": "6.79%"
+              },
+              {
+                "ticker": "3690.HK",
+                "shares": 3000.0,
+                "price": 71.5999984741211,
+                "value": 214799.99542236328,
+                "weight": 0.045553518998791294,
+                "weight_display": "4.56%"
+              }
+            ]
+          },
+          "is_error": false
+        },
+        {
+          "name": "run_hsi_shock",
+          "input": {
+            "shock": 0
+          },
+          "output": {
+            "scenario": "HSI +0%",
+            "hsi_shock": 0.0,
+            "hsi_shock_display": "0.00%",
+            "as_of": "2026-10-30",
+            "currency": "HKD",
+            "portfolio_value": 4715332.649230957,
+            "total_pnl": 0.0,
+            "total_pnl_pct": 0.0,
+            "total_pnl_pct_display": "0.00%",
+            "positions": [
+              {
+                "ticker": "0700.HK",
+                "position_value": 767200.0122070312,
+                "beta": 1.114103794779121,
+                "shock": 0.0,
+                "shock_display": "0.00%",
+                "pnl": 0.0
+              },
+              {
+                "ticker": "3690.HK",
+                "position_value": 214799.99542236328,
+                "beta": 1.7072194120642334,
+                "shock": 0.0,
+                "shock_display": "0.00%",
+                "pnl": 0.0
+              },
+              {
+                "ticker": "0005.HK",
+                "position_value": 1084804.0771484375,
+                "beta": 0.7532226915996916,
+                "shock": 0.0,
+                "shock_display": "0.00%",
+                "pnl": 0.0
+              },
+              {
+                "ticker": "0939.HK",
+                "position_value": 615600.0137329102,
+                "beta": 0.9713839305155543,
+                "shock": 0.0,
+                "shock_display": "0.00%",
+                "pnl": 0.0
+              },
+              {
+                "ticker": "1299.HK",
+                "position_value": 452400.00915527344,
+                "beta": 0.9725184057763839,
+                "shock": 0.0,
+                "shock_display": "0.00%",
+                "pnl": 0.0
+              },
+              {
+                "ticker": "0388.HK",
+                "position_value": 367399.9938964844,
+                "beta": 1.1323055712503944,
+                "shock": 0.0,
+                "shock_display": "0.00%",
+                "pnl": 0.0
+              },
+              {
+                "ticker": "0016.HK",
+                "position_value": 424728.5461425781,
+                "beta": 0.8050394411790532,
+                "shock": 0.0,
+                "shock_display": "0.00%",
+                "pnl": 0.0
+              },
+              {
+                "ticker": "0941.HK",
+                "position_value": 320000.0,
+                "beta": 0.7329598798802033,
+                "shock": 0.0,
+                "shock_display": "0.00%",
+                "pnl": 0.0
+              },
+              {
+                "ticker": "2800.HK",
+                "position_value": 468400.0015258789,
+                "beta": 0.9710865032705893,
+                "shock": 0.0,
+                "shock_display": "0.00%",
+                "pnl": 0.0
+              }
+            ]
+          },
+          "is_error": false
+        }
+      ],
+      "input_tokens": 9960,
+      "output_tokens": 139,
+      "latency_s": 4.031,
+      "iterations": 3,
+      "stop_reason": "stop",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite"
+    }
+  ],
+  "unanswered_ids": []
+}

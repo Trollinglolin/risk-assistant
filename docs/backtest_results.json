@@ -1,0 +1,132 @@
+{
+  "historical": {
+    "start": "2020-10-05",
+    "end": "2026-10-30",
+    "days": 1493,
+    "years": 5.97,
+    "exceptions": 18,
+    "expected": 14.93,
+    "kupiec_lr": 0.5983501787046634,
+    "kupiec_p": 0.43920820088503687,
+    "kupiec_reject": false,
+    "christoffersen_ind_p": 0.01708452107338128,
+    "christoffersen_cc_p": 0.043152702309306894,
+    "cc_reject": true,
+    "latest_250d": {
+      "zone": "green",
+      "count": 4,
+      "plus_factor": 0.0,
+      "multiplier": 3.0
+    },
+    "rolling_zone_days": {
+      "green": 1074,
+      "yellow": 170,
+      "red": 0
+    },
+    "worst_250d_count": 5
+  },
+  "normal": {
+    "start": "2020-10-05",
+    "end": "2026-10-30",
+    "days": 1493,
+    "years": 5.97,
+    "exceptions": 16,
+    "expected": 14.93,
+    "kupiec_lr": 0.07569032020865052,
+    "kupiec_p": 0.7832250157306004,
+    "kupiec_reject": false,
+    "christoffersen_ind_p": 0.01014921746338782,
+    "christoffersen_cc_p": 0.035362496635736304,
+    "cc_reject": true,
+    "latest_250d": {
+      "zone": "green",
+      "count": 2,
+      "plus_factor": 0.0,
+      "multiplier": 3.0
+    },
+    "rolling_zone_days": {
+      "green": 961,
+      "yellow": 283,
+      "red": 0
+    },
+    "worst_250d_count": 7
+  },
+  "t": {
+    "start": "2020-10-05",
+    "end": "2026-10-30",
+    "days": 1493,
+    "years": 5.97,
+    "exceptions": 13,
+    "expected": 14.93,
+    "kupiec_lr": 0.26351440818788774,
+    "kupiec_p": 0.6077159247477892,
+    "kupiec_reject": false,
+    "christoffersen_ind_p": 0.0039753314754506315,
+    "christoffersen_cc_p": 0.013852611034221942,
+    "cc_reject": true,
+    "latest_250d": {
+      "zone": "green",
+      "count": 2,
+      "plus_factor": 0.0,
+      "multiplier": 3.0
+    },
+    "rolling_zone_days": {
+      "green": 1074,
+      "yellow": 170,
+      "red": 0
+    },
+    "worst_250d_count": 5
+  },
+  "garch": {
+    "start": "2020-10-05",
+    "end": "2026-10-30",
+    "days": 1493,
+    "years": 5.97,
+    "exceptions": 16,
+    "expected": 14.93,
+    "kupiec_lr": 0.07569032020865052,
+    "kupiec_p": 0.7832250157306004,
+    "kupiec_reject": false,
+    "christoffersen_ind_p": 0.16180319728390696,
+    "christoffersen_cc_p": 0.3618623763877719,
+    "cc_reject": false,
+    "latest_250d": {
+      "zone": "yellow",
+      "count": 5,
+      "plus_factor": 0.4,
+      "multiplier": 3.4
+    },
+    "rolling_zone_days": {
+      "green": 1064,
+      "yellow": 180,
+      "red": 0
+    },
+    "worst_250d_count": 6
+  },
+  "evt": {
+    "start": "2020-10-05",
+    "end": "2026-10-30",
+    "days": 1493,
+    "years": 5.97,
+    "exceptions": 15,
+    "expected": 14.93,
+    "kupiec_lr": 0.0003310017196156423,
+    "kupiec_p": 0.9854845257954594,
+    "kupiec_reject": false,
+    "christoffersen_ind_p": 0.007603348582608152,
+    "christoffersen_cc_p": 0.02836883192828645,
+    "cc_reject": true,
+    "latest_250d": {
+      "zone": "green",
+      "count": 3,
+      "plus_factor": 0.0,
+      "multiplier": 3.0
+    },
+    "rolling_zone_days": {
+      "green": 1074,
+      "yellow": 170,
+      "red": 0
+    },
+    "worst_250d_count": 5
+  }
+}

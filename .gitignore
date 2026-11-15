@@ -1,0 +1,27 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# project
+.env
+.DS_Store
+reports/
+data/prices_*.parquet
+docs/backtest_*.parquet
+.ruff_cache/
+.pytest_cache/
+
+# personal planning notes (kept local)
+PLAN.md
+idea.txt
+# local tooling
+dashboard/node_modules/
+dashboard/dist/
+*.log

@@ -1,0 +1,103 @@
+# Hang Seng Index constituents after the September 2026 review (effective 2026-09-07).
+# Source: Hang Seng Indexes Company press release, 21 Aug 2026, Appendix 1
+# https://www.hsi.com.hk/content/dam/wpb/hsil/en_hk/press_releases/content/20260821_press_release_e.pdf
+# weight_pct: index weight after the review, as if rebalanced on 2026-08-19 (sums to 100 +/- rounding).
+# faf_pct: free-float adjusted factor. name: HSIL short name as printed; display: readable name.
+as_of: '2026-09-07'
+count: 95
+constituents:
+  - {ticker: '0005.HK', display: 'HSBC', name: 'HSBC HOLDINGS', sector: 'Financials', faf_pct: 100, weight_pct: 8.0}
+  - {ticker: '0939.HK', display: 'China Construction Bank', name: 'CCB (H)', sector: 'Financials', faf_pct: 40, weight_pct: 5.14}
+  - {ticker: '1299.HK', display: 'AIA Group', name: 'AIA', sector: 'Financials', faf_pct: 100, weight_pct: 4.46}
+  - {ticker: '1398.HK', display: 'ICBC', name: 'ICBC (H)', sector: 'Financials', faf_pct: 95, weight_pct: 3.6}
+  - {ticker: '0388.HK', display: 'HKEX', name: 'HKEX', sector: 'Financials', faf_pct: 95, weight_pct: 2.95}
+  - {ticker: '3988.HK', display: 'Bank of China', name: 'BANK OF CHINA (H)', sector: 'Financials', faf_pct: 85, weight_pct: 2.27}
+  - {ticker: '2318.HK', display: 'Ping An Insurance', name: 'PING AN (H)', sector: 'Financials', faf_pct: 90, weight_pct: 2.15}
+  - {ticker: '2628.HK', display: 'China Life', name: 'CHINA LIFE (H)', sector: 'Financials', faf_pct: 100, weight_pct: 1.19}
+  - {ticker: '3968.HK', display: 'China Merchants Bank', name: 'CM BANK (H)', sector: 'Financials', faf_pct: 85, weight_pct: 1.12}
+  - {ticker: '2388.HK', display: 'BOC Hong Kong', name: 'BOC HONG KONG', sector: 'Financials', faf_pct: 35, weight_pct: 1.1}
+  - {ticker: '9988.HK', display: 'Alibaba Group', name: 'BABA - W', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 100, weight_pct: 8.0}
+  - {ticker: '3690.HK', display: 'Meituan', name: 'MEITUAN - W', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 90, weight_pct: 2.86}
+  - {ticker: '1211.HK', display: 'BYD Company', name: 'BYD COMPANY (H)', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 100, weight_pct: 1.95}
+  - {ticker: '0669.HK', display: 'Techtronic Industries', name: 'TECHTRONIC IND', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 80, weight_pct: 1.2}
+  - {ticker: '9618.HK', display: 'JD.com', name: 'JD - SW', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 55, weight_pct: 1.03}
+  - {ticker: '9888.HK', display: 'Baidu', name: 'BIDU - SW', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 55, weight_pct: 0.83}
+  - {ticker: '9961.HK', display: 'Trip.com', name: 'TRIP.COM - S', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 50, weight_pct: 0.72}
+  - {ticker: '0175.HK', display: 'Geely Auto', name: 'GEELY AUTO', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 60, weight_pct: 0.69}
+  - {ticker: '1024.HK', display: 'Kuaishou', name: 'KUAISHOU - W', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 70, weight_pct: 0.68}
+  - {ticker: '9992.HK', display: 'Pop Mart', name: 'POP MART', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 55, weight_pct: 0.65}
+  - {ticker: '2020.HK', display: 'Anta Sports', name: 'ANTA SPORTS', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 50, weight_pct: 0.61}
+  - {ticker: '9633.HK', display: 'Nongfu Spring', name: 'NONGFU SPRING (H)', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 40, weight_pct: 0.5}
+  - {ticker: '0027.HK', display: 'Galaxy Entertainment', name: 'GALAXY ENT', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 45, weight_pct: 0.41}
+  - {ticker: '0288.HK', display: 'WH Group', name: 'WH GROUP', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 65, weight_pct: 0.4}
+  - {ticker: '2015.HK', display: 'Li Auto', name: 'LI AUTO - W', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 65, weight_pct: 0.39}
+  - {ticker: '0066.HK', display: 'MTR Corporation', name: 'MTR CORPORATION', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 30, weight_pct: 0.37}
+  - {ticker: '0300.HK', display: 'Midea Group', name: 'MIDEA GROUP (H)', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 95, weight_pct: 0.35}
+  - {ticker: '2319.HK', display: 'Mengniu Dairy', name: 'MENGNIU DAIRY', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 80, weight_pct: 0.33}
+  - {ticker: '6690.HK', display: 'Haier Smart Home', name: 'HAIER SMARTHOME (H)', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 85, weight_pct: 0.3}
+  - {ticker: '9901.HK', display: 'New Oriental', name: 'NEW ORIENTAL - S', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 50, weight_pct: 0.22}
+  - {ticker: '1928.HK', display: 'Sands China', name: 'SANDS CHINA LTD', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 30, weight_pct: 0.21}
+  - {ticker: '0291.HK', display: 'China Resources Beer', name: 'CHINA RES BEER', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 50, weight_pct: 0.2}
+  - {ticker: '2313.HK', display: 'Shenzhou International', name: 'SHENZHOU INTL', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 55, weight_pct: 0.2}
+  - {ticker: '2331.HK', display: 'Li-Ning', name: 'LI NING', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 90, weight_pct: 0.2}
+  - {ticker: '0322.HK', display: 'Tingyi', name: 'TINGYI', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 35, weight_pct: 0.16}
+  - {ticker: '1929.HK', display: 'Chow Tai Fook', name: 'CHOW TAI FOOK', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 20, weight_pct: 0.15}
+  - {ticker: '6862.HK', display: 'Haidilao', name: 'HAIDILAO', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 35, weight_pct: 0.13}
+  - {ticker: '6181.HK', display: 'Laopu Gold', name: 'LAOPU GOLD (H)', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 45, weight_pct: 0.13}
+  - {ticker: '1044.HK', display: 'Hengan International', name: 'HENGAN INT''L', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 55, weight_pct: 0.09}
+  - {ticker: '1876.HK', display: 'Budweiser APAC', name: 'BUD APAC', sector: 'Consumer Discretionary and Consumer Staples', faf_pct: 15, weight_pct: 0.07}
+  - {ticker: '0700.HK', display: 'Tencent', name: 'TENCENT', sector: 'Information Technology', faf_pct: 70, weight_pct: 8.0}
+  - {ticker: '1810.HK', display: 'Xiaomi', name: 'XIAOMI - W', sector: 'Information Technology', faf_pct: 70, weight_pct: 2.93}
+  - {ticker: '9999.HK', display: 'NetEase', name: 'NTES', sector: 'Information Technology', faf_pct: 55, weight_pct: 2.02}
+  - {ticker: '0981.HK', display: 'SMIC', name: 'SMIC', sector: 'Information Technology', faf_pct: 75, weight_pct: 1.95}
+  - {ticker: '0992.HK', display: 'Lenovo', name: 'LENOVO GROUP', sector: 'Information Technology', faf_pct: 60, weight_pct: 1.32}
+  - {ticker: '1347.HK', display: 'Hua Hong Semiconductor', name: 'HUA HONG GRACE', sector: 'Information Technology', faf_pct: 60, weight_pct: 0.54}
+  - {ticker: '2382.HK', display: 'Sunny Optical', name: 'SUNNY OPTICAL', sector: 'Information Technology', faf_pct: 65, weight_pct: 0.24}
+  - {ticker: '0285.HK', display: 'BYD Electronic', name: 'BYD ELECTRONIC', sector: 'Information Technology', faf_pct: 35, weight_pct: 0.11}
+  - {ticker: '0883.HK', display: 'CNOOC', name: 'CNOOC', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 35, weight_pct: 2.25}
+  - {ticker: '0857.HK', display: 'PetroChina', name: 'PETROCHINA (H)', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 100, weight_pct: 1.24}
+  - {ticker: '2899.HK', display: 'Zijin Mining', name: 'ZIJIN MINING (H)', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 100, weight_pct: 1.23}
+  - {ticker: '0001.HK', display: 'CK Hutchison', name: 'CKH HOLDINGS', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 70, weight_pct: 1.1}
+  - {ticker: '1088.HK', display: 'China Shenhua Energy', name: 'CHINA SHENHUA (H)', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 95, weight_pct: 0.84}
+  - {ticker: '3750.HK', display: 'CATL', name: 'CATL (H)', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 95, weight_pct: 0.77}
+  - {ticker: '0386.HK', display: 'Sinopec', name: 'SINOPEC CORP (H)', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 95, weight_pct: 0.58}
+  - {ticker: '1378.HK', display: 'China Hongqiao', name: 'CHINAHONGQIAO', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 35, weight_pct: 0.46}
+  - {ticker: '0267.HK', display: 'CITIC', name: 'CITIC', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 20, weight_pct: 0.42}
+  - {ticker: '1519.HK', display: 'J&T Express', name: 'J&T EXPRESS - W', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 70, weight_pct: 0.41}
+  - {ticker: '2057.HK', display: 'ZTO Express', name: 'ZTO EXPRESS - W', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 50, weight_pct: 0.4}
+  - {ticker: '2338.HK', display: 'Weichai Power', name: 'WEICHAI POWER (H)', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 100, weight_pct: 0.37}
+  - {ticker: '3993.HK', display: 'CMOC', name: 'CMOC (H)', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 95, weight_pct: 0.36}
+  - {ticker: '2600.HK', display: 'Chalco', name: 'CHALCO (H)', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 95, weight_pct: 0.18}
+  - {ticker: '2618.HK', display: 'JD Logistics', name: 'JD LOGISTICS', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 40, weight_pct: 0.18}
+  - {ticker: '0316.HK', display: 'OOIL', name: 'OOIL', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 20, weight_pct: 0.13}
+  - {ticker: '0868.HK', display: 'Xinyi Glass', name: 'XINYI GLASS', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 50, weight_pct: 0.12}
+  - {ticker: '0968.HK', display: 'Xinyi Solar', name: 'XINYI SOLAR', sector: 'Energy, Materials, Industrials and Conglomerates', faf_pct: 50, weight_pct: 0.06}
+  - {ticker: '0941.HK', display: 'China Mobile', name: 'CHINA MOBILE', sector: 'Telecommunications and Utilities', faf_pct: 30, weight_pct: 3.02}
+  - {ticker: '0002.HK', display: 'CLP Holdings', name: 'CLP HOLDINGS', sector: 'Telecommunications and Utilities', faf_pct: 65, weight_pct: 0.76}
+  - {ticker: '0006.HK', display: 'Power Assets', name: 'POWER ASSETS', sector: 'Telecommunications and Utilities', faf_pct: 65, weight_pct: 0.5}
+  - {ticker: '0003.HK', display: 'HK and China Gas', name: 'HK & CHINA GAS', sector: 'Telecommunications and Utilities', faf_pct: 60, weight_pct: 0.48}
+  - {ticker: '0728.HK', display: 'China Telecom', name: 'CHINA TELECOM (H)', sector: 'Telecommunications and Utilities', faf_pct: 95, weight_pct: 0.37}
+  - {ticker: '1038.HK', display: 'CK Infrastructure', name: 'CKI HOLDINGS', sector: 'Telecommunications and Utilities', faf_pct: 25, weight_pct: 0.24}
+  - {ticker: '2688.HK', display: 'ENN Energy', name: 'ENN ENERGY', sector: 'Telecommunications and Utilities', faf_pct: 70, weight_pct: 0.22}
+  - {ticker: '0836.HK', display: 'China Resources Power', name: 'CHINA RES POWER', sector: 'Telecommunications and Utilities', faf_pct: 40, weight_pct: 0.22}
+  - {ticker: '0762.HK', display: 'China Unicom', name: 'CHINA UNICOM', sector: 'Telecommunications and Utilities', faf_pct: 20, weight_pct: 0.2}
+  - {ticker: '6160.HK', display: 'BeOne Medicines', name: 'BEONE MEDICINES', sector: 'Healthcare', faf_pct: 85, weight_pct: 1.6}
+  - {ticker: '2269.HK', display: 'WuXi Biologics', name: 'WUXI BIO', sector: 'Healthcare', faf_pct: 95, weight_pct: 1.11}
+  - {ticker: '1801.HK', display: 'Innovent Biologics', name: 'INNOVENT BIO', sector: 'Healthcare', faf_pct: 95, weight_pct: 0.96}
+  - {ticker: '2359.HK', display: 'WuXi AppTec', name: 'WUXI APPTEC (H)', sector: 'Healthcare', faf_pct: 95, weight_pct: 0.56}
+  - {ticker: '1093.HK', display: 'CSPC Pharmaceutical', name: 'CSPC PHARMA', sector: 'Healthcare', faf_pct: 70, weight_pct: 0.41}
+  - {ticker: '3692.HK', display: 'Hansoh Pharmaceutical', name: 'HANSOH PHARMA', sector: 'Healthcare', faf_pct: 25, weight_pct: 0.3}
+  - {ticker: '1177.HK', display: 'Sino Biopharm', name: 'SBP GROUP', sector: 'Healthcare', faf_pct: 55, weight_pct: 0.29}
+  - {ticker: '6618.HK', display: 'JD Health', name: 'JD HEALTH', sector: 'Healthcare', faf_pct: 35, weight_pct: 0.26}
+  - {ticker: '1099.HK', display: 'Sinopharm', name: 'SINOPHARM (H)', sector: 'Healthcare', faf_pct: 100, weight_pct: 0.13}
+  - {ticker: '0241.HK', display: 'Alibaba Health', name: 'ALI HEALTH', sector: 'Healthcare', faf_pct: 40, weight_pct: 0.12}
+  - {ticker: '0016.HK', display: 'SHK Properties', name: 'SHK PPT', sector: 'Properties & Construction', faf_pct: 50, weight_pct: 1.03}
+  - {ticker: '1109.HK', display: 'China Resources Land', name: 'CHINA RES LAND', sector: 'Properties & Construction', faf_pct: 45, weight_pct: 0.65}
+  - {ticker: '0823.HK', display: 'Link REIT', name: 'LINK REIT', sector: 'Properties & Construction', faf_pct: 100, weight_pct: 0.59}
+  - {ticker: '1113.HK', display: 'CK Asset', name: 'CK ASSET', sector: 'Properties & Construction', faf_pct: 55, weight_pct: 0.52}
+  - {ticker: '1997.HK', display: 'Wharf REIC', name: 'WHARF REIC', sector: 'Properties & Construction', faf_pct: 55, weight_pct: 0.32}
+  - {ticker: '0688.HK', display: 'China Overseas Land', name: 'CHINA OVERSEAS', sector: 'Properties & Construction', faf_pct: 35, weight_pct: 0.32}
+  - {ticker: '0012.HK', display: 'Henderson Land', name: 'HENDERSON LAND', sector: 'Properties & Construction', faf_pct: 30, weight_pct: 0.24}
+  - {ticker: '1209.HK', display: 'China Resources Mixc', name: 'CHINA RES MIXC', sector: 'Properties & Construction', faf_pct: 30, weight_pct: 0.17}
+  - {ticker: '0960.HK', display: 'Longfor', name: 'LONGFOR GROUP', sector: 'Properties & Construction', faf_pct: 35, weight_pct: 0.09}
+  - {ticker: '0101.HK', display: 'Hang Lung Properties', name: 'HANG LUNG PPT', sector: 'Properties & Construction', faf_pct: 35, weight_pct: 0.08}

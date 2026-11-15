@@ -1,0 +1,99 @@
+@import "tailwindcss";
+@import "@fontsource/ibm-plex-sans/400.css";
+@import "@fontsource/ibm-plex-sans/500.css";
+@import "@fontsource/ibm-plex-sans/600.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* Colour tokens: dataviz reference palette (validated), light + selected dark steps. */
+:root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --raised: #ffffff;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --muted: #6f6e69;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --line: #e7e6df;
+  --accent: #2a78d6;        /* categorical slot 1: VaR / primary series */
+  --accent-ink: #1c5cab;
+  --accent-soft: #e6effb;
+  --series-2: #eb6834;      /* slot 2: ES */
+  --neutral-mark: #b9b8b0;  /* realised P&L bars */
+  --critical: #d03b3b;      /* status: VaR breach */
+  --good: #006300;
+  --warn: #8a5a00;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --raised: #20201f;
+    --ink: #f0efec;
+    --ink-2: #c3c2b7;
+    --muted: #9a9890;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --line: #2c2c2a;
+    --accent: #3987e5;
+    --accent-ink: #86b6ef;
+    --accent-soft: #17283d;
+    --series-2: #d95926;
+    --neutral-mark: #55544f;
+    --critical: #e05555;
+    --good: #0ca30c;
+    --warn: #fab219;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d;
+  --surface: #1a1a19;
+  --raised: #20201f;
+  --ink: #f0efec;
+  --ink-2: #c3c2b7;
+  --muted: #9a9890;
+  --grid: #2c2c2a;
+  --axis: #383835;
+  --line: #2c2c2a;
+  --accent: #3987e5;
+  --accent-ink: #86b6ef;
+  --accent-soft: #17283d;
+  --series-2: #d95926;
+  --neutral-mark: #55544f;
+  --critical: #e05555;
+  --good: #0ca30c;
+  --warn: #fab219;
+}
+
+@theme inline {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-critical: var(--critical);
+  --color-good: var(--good);
+  --color-warn: var(--warn);
+}
+
+html, body { background: var(--page); color: var(--ink); }
+body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+@utility num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+@keyframes shimmer { from { opacity: .55 } to { opacity: 1 } }
+.skeleton { background: var(--line); border-radius: 6px; animation: shimmer 1s ease-in-out infinite alternate; }
+@media (prefers-reduced-motion: reduce) { .skeleton { animation: none; } }

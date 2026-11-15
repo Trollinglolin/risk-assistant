@@ -1,0 +1,172 @@
+{
+  "historical": {
+    "start": "2020-06-11",
+    "end": "2026-10-30",
+    "days": 1571,
+    "years": 6.28,
+    "exceptions": 12,
+    "expected": 15.71,
+    "kupiec_lr": 0.9634635728290846,
+    "kupiec_p": 0.3263157731164098,
+    "kupiec_reject": false,
+    "christoffersen_ind_p": 0.0024714387781285415,
+    "christoffersen_cc_p": 0.006329455435647593,
+    "cc_reject": true,
+    "latest_250d": {
+      "zone": "green",
+      "count": 2,
+      "plus_factor": 0.0,
+      "multiplier": 3.0
+    },
+    "rolling_zone_days": {
+      "green": 1322,
+      "yellow": 0,
+      "red": 0
+    },
+    "worst_250d_count": 4,
+    "method": "historical",
+    "alpha": 0.99,
+    "window": 500,
+    "as_of": "2026-10-30",
+    "currency": "HKD",
+    "requested_years": null,
+    "kupiec_pass": true,
+    "christoffersen_cc_pass": false
+  },
+  "normal": {
+    "start": "2020-06-11",
+    "end": "2026-10-30",
+    "days": 1571,
+    "years": 6.28,
+    "exceptions": 16,
+    "expected": 15.71,
+    "kupiec_lr": 0.005374715990086543,
+    "kupiec_p": 0.9415574810843692,
+    "kupiec_reject": false,
+    "christoffersen_ind_p": 0.009120121188659121,
+    "christoffersen_cc_p": 0.03329783034159307,
+    "cc_reject": true,
+    "latest_250d": {
+      "zone": "green",
+      "count": 2,
+      "plus_factor": 0.0,
+      "multiplier": 3.0
+    },
+    "rolling_zone_days": {
+      "green": 1051,
+      "yellow": 271,
+      "red": 0
+    },
+    "worst_250d_count": 7,
+    "method": "normal",
+    "alpha": 0.99,
+    "window": 500,
+    "as_of": "2026-10-30",
+    "currency": "HKD",
+    "requested_years": null,
+    "kupiec_pass": true,
+    "christoffersen_cc_pass": false
+  },
+  "t": {
+    "start": "2020-06-11",
+    "end": "2026-10-30",
+    "days": 1571,
+    "years": 6.28,
+    "exceptions": 10,
+    "expected": 15.71,
+    "kupiec_lr": 2.4066905642914236,
+    "kupiec_p": 0.12081754172359588,
+    "kupiec_reject": false,
+    "christoffersen_ind_p": 0.0010563252872996289,
+    "christoffersen_cc_p": 0.0014068309727233417,
+    "cc_reject": true,
+    "latest_250d": {
+      "zone": "green",
+      "count": 0,
+      "plus_factor": 0.0,
+      "multiplier": 3.0
+    },
+    "rolling_zone_days": {
+      "green": 1322,
+      "yellow": 0,
+      "red": 0
+    },
+    "worst_250d_count": 4,
+    "method": "t",
+    "alpha": 0.99,
+    "window": 500,
+    "as_of": "2026-10-30",
+    "currency": "HKD",
+    "requested_years": null,
+    "kupiec_pass": true,
+    "christoffersen_cc_pass": false
+  },
+  "garch": {
+    "start": "2020-06-11",
+    "end": "2026-10-30",
+    "days": 1571,
+    "years": 6.28,
+    "exceptions": 12,
+    "expected": 15.71,
+    "kupiec_lr": 0.9634635728290846,
+    "kupiec_p": 0.3263157731164098,
+    "kupiec_reject": false,
+    "christoffersen_ind_p": 0.0024714387781285415,
+    "christoffersen_cc_p": 0.006329455435647593,
+    "cc_reject": true,
+    "latest_250d": {
+      "zone": "green",
+      "count": 3,
+      "plus_factor": 0.0,
+      "multiplier": 3.0
+    },
+    "rolling_zone_days": {
+      "green": 1322,
+      "yellow": 0,
+      "red": 0
+    },
+    "worst_250d_count": 4,
+    "method": "garch",
+    "alpha": 0.99,
+    "window": 500,
+    "as_of": "2026-10-30",
+    "currency": "HKD",
+    "requested_years": null,
+    "kupiec_pass": true,
+    "christoffersen_cc_pass": false
+  },
+  "evt": {
+    "start": "2020-06-11",
+    "end": "2026-10-30",
+    "days": 1571,
+    "years": 6.28,
+    "exceptions": 12,
+    "expected": 15.71,
+    "kupiec_lr": 0.9634635728290846,
+    "kupiec_p": 0.3263157731164098,
+    "kupiec_reject": false,
+    "christoffersen_ind_p": 0.0024714387781285415,
+    "christoffersen_cc_p": 0.006329455435647593,
+    "cc_reject": true,
+    "latest_250d": {
+      "zone": "green",
+      "count": 2,
+      "plus_factor": 0.0,
+      "multiplier": 3.0
+    },
+    "rolling_zone_days": {
+      "green": 1322,
+      "yellow": 0,
+      "red": 0
+    },
+    "worst_250d_count": 4,
+    "method": "evt",
+    "alpha": 0.99,
+    "window": 500,
+    "as_of": "2026-10-30",
+    "currency": "HKD",
+    "requested_years": null,
+    "kupiec_pass": true,
+    "christoffersen_cc_pass": false
+  }
+}

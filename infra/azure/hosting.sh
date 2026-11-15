@@ -3,6 +3,9 @@
 #
 #   infra/azure/hosting.sh status   # running state, replicas, URL
 #   infra/azure/hosting.sh off      # stop the app: no replicas, no compute charges, site offline
+#   infra/azure/hosting.sh off --delete-registry
+#                                   # also delete the container registry (the only remaining
+#                                   # cost, ~USD 0.17/day); bring it back with deploy.sh
 #   infra/azure/hosting.sh on       # start it again (first request then takes ~30-60 s)
 #
 # "off" stops the Container App itself (REST stop action), so nothing, not even a visitor,
@@ -12,6 +15,8 @@ set -euo pipefail
 
 RG=${RG:-rg-hkrisk}
 APP=${APP:-hkrisk}
+SUB_HASH=$(az account show --query id -o tsv | shasum | cut -c1-6)
+ACR=${ACR:-hkrisk${SUB_HASH}}
 API=2024-03-01
 ID=$(az containerapp show -n "$APP" -g "$RG" --query id -o tsv)
 URL="https://$(az containerapp show -n "$APP" -g "$RG" --query properties.configuration.ingress.fqdn -o tsv)"
@@ -34,8 +39,22 @@ case "${1:-status}" in
     az rest --method post --url "https://management.azure.com$ID/stop?api-version=$API" -o none
     wait_for Stopped
     echo "OFF: $APP is stopped. No compute charges; $URL is offline."
+    if [ "${2:-}" = "--delete-registry" ]; then
+      if az acr show -n "$ACR" -g "$RG" -o none 2>/dev/null; then
+        az acr delete -n "$ACR" -g "$RG" --yes -o none
+        echo "registry $ACR deleted: nothing in $RG is billing now."
+        echo "to come back: colima start, then infra/azure/deploy.sh (rebuilds), then hosting.sh on"
+      else
+        echo "registry $ACR already deleted"
+      fi
+    fi
     ;;
   on)
+    if ! az acr show -n "$ACR" -g "$RG" -o none 2>/dev/null; then
+      echo "the container registry was deleted (off --delete-registry), so there is no image." >&2
+      echo "run: colima start && infra/azure/deploy.sh   (rebuilds and pushes), then: $0 on" >&2
+      exit 1
+    fi
     az rest --method post --url "https://management.azure.com$ID/start?api-version=$API" -o none
     wait_for Running
     echo "ON: $APP is running. Waking it up (scale from zero)..."
@@ -52,6 +71,9 @@ case "${1:-status}" in
     az containerapp replica list -n "$APP" -g "$RG" --query "length(@)" -o tsv 2>/dev/null \
       | xargs -I{} echo "active replicas: {}"
     echo "url: $URL"
+    az acr show -n "$ACR" -g "$RG" -o none 2>/dev/null \
+      && echo "registry: $ACR (exists, ~USD 0.17/day)" \
+      || echo "registry: deleted (run deploy.sh before 'on')"
     ;;
   *)
     echo "usage: $0 on|off|status" >&2

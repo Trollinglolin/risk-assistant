@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/Trollinglolin/riak-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/Trollinglolin/riak-assistant/actions/workflows/ci.yml)
 
-**Live demo:** https://hkrisk.jollymushroom-951ccee3.francecentral.azurecontainerapps.io (scales to zero, so the first load after idle can take up to a minute. The risk dashboard is public; the chat needs an access key because it spends LLM quota.)
+**Live demo:** https://hkrisk.jollymushroom-951ccee3.francecentral.azurecontainerapps.io. It is usually **switched off** to save cloud credit; see [Running it again](#running-it-again). The risk dashboard is public when it's on; the chat needs an access key because it spends LLM quota.
 
 A tested Python VaR / ES / GARCH / EVT engine for a portfolio of Hong Kong equities, with
 backtests (Kupiec, Christoffersen, Basel traffic light), risk attribution, stress tests, a
@@ -24,19 +24,89 @@ and the eval measures that.
   /risk/...    (Gemini/Groq/OpenRouter/Ollama free, or Anthropic)
 ```
 
-## Quick start
+## Running it again
+
+### 1. Locally (free, about 2 minutes)
+
+You need: [uv](https://docs.astral.sh/uv/), Node 22+, and a free Gemini key from
+https://aistudio.google.com (only for the chat and eval).
 
 ```bash
-uv sync
-uv run pytest                      # 144 tests, offline (committed data only)
-uv run hkrisk var --method garch   # one number
-uv run hkrisk var --portfolio hsi  # same, for all 95 Hang Seng Index stocks
-uv run uvicorn hkrisk.api.main:app --reload   # http://127.0.0.1:8000/docs
-cp .env.example .env               # add a free LLM key, then:
-uv run hkrisk ask "What's my 99% VaR and what drove it this week?"
-uv run python evals/run_eval.py    # 65-question eval → evals/results/<timestamp>.json
-uv run python scripts/run_backtests.py        # backtest table + charts → docs/
+uv sync                                   # Python 3.12 + dependencies
+uv run pytest                             # 144 tests, offline, should all pass
+cp .env.example .env                      # first time only, then edit .env:
+#   GEMINI_API_KEY=<your key>
+#   HKRISK_API_KEY=<32+ random chars>  ->  python -c "import secrets; print(secrets.token_urlsafe(32))"
 ```
+
+Then open two terminals:
+
+```bash
+# terminal 1: the API on http://127.0.0.1:8000
+uv run uvicorn hkrisk.api.main:app --reload
+
+# terminal 2: the dashboard on http://localhost:5173
+cd dashboard && npm install && npm run dev
+```
+
+Open http://localhost:5173. Switch between the `Core 9` and `HSI 95` books at the top right.
+The chat works straight away, because the dev server adds your `HKRISK_API_KEY` for you.
+Stop both servers with `Ctrl+C`.
+
+Without the dashboard:
+
+```bash
+uv run hkrisk var --method garch                    # one VaR number (core book)
+uv run hkrisk var --portfolio hsi                   # all 95 Hang Seng Index stocks
+uv run hkrisk ask "What's my 99% VaR and what drove it this week?"
+uv run python evals/run_eval.py                     # 65-question eval, ~140 Gemini requests
+uv run python scripts/run_backtests.py              # backtest tables + charts -> docs/
+```
+
+### 2. The hosted site on Azure
+
+Check what state it is in first:
+
+```bash
+az login                                  # once per machine / when the token expires
+infra/azure/hosting.sh status             # app Running/Stopped, and whether the registry exists
+```
+
+**If `registry: ... (exists)`**, start it in about 40 seconds:
+
+```bash
+infra/azure/hosting.sh on
+```
+
+**If `registry: deleted`** (the cheapest "off" state), rebuild and push the image first
+(about 10-15 minutes, mostly the x86 build under emulation on Apple Silicon):
+
+```bash
+colima start                                                       # local Docker
+docker run --privileged --rm tonistiigi/binfmt:qemu-v9.2.2 --install amd64     # x86 emulation, after each colima start
+BUILD=local infra/azure/deploy.sh                                  # recreate registry, build, push, update app
+infra/azure/hosting.sh on
+colima stop                                                        # optional, frees memory
+```
+
+`deploy.sh` reads `GEMINI_API_KEY` and `HKRISK_API_KEY` from `.env` and stores them as Azure
+secrets; it never prints them. The hosted chat asks visitors for the access key, which is the
+`HKRISK_API_KEY` value. Share it only with people you want using your LLM quota.
+
+**Turning it off again:**
+
+```bash
+infra/azure/hosting.sh off                     # stop the app: site offline, no compute cost
+infra/azure/hosting.sh off --delete-registry   # also delete the registry: nothing billing at all
+```
+
+| State | Monthly cost | Time to bring back |
+|---|---|---|
+| On (scales to zero when idle) | registry about USD 5, compute about 0 | already up |
+| `off` | registry about USD 5 | about 40 s (`on`) |
+| `off --delete-registry` | about USD 0 | about 10-15 min (`deploy.sh`, then `on`) |
+
+A USD 10/month budget alert on the resource group emails you if spending grows.
 
 ## Conventions
 
@@ -310,16 +380,7 @@ and an HTTP→HTTPS redirect are on.
   under amd64 emulation), and there's one Container Apps environment per subscription (the app
   shares an existing environment via `ENV_ID`).
 
-Turn the hosting on and off to save credit:
-
-```bash
-infra/azure/hosting.sh off      # stop the app: no compute charges, site offline
-infra/azure/hosting.sh on       # start again (about 40 s until it serves)
-infra/azure/hosting.sh status
-```
-
-When it's on but idle, the app scales to zero and uses almost no compute. The container
-registry (about USD 5/month) keeps billing in both states.
+To start, stop or rebuild the hosted site, see [Running it again](#running-it-again).
 
 The AWS path below (Lambda + S3 + EventBridge) uses the same image and is documented in
 `infra/deploy.md`. The daily report job has not been moved to Azure yet.

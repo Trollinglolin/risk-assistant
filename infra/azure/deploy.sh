@@ -37,7 +37,7 @@ az acr show -n "$ACR" -g "$RG" -o none 2>/dev/null \
 
 echo "== image $IMAGE (linux/amd64)"
 # BUILD=cloud (ACR Tasks; blocked on Azure for Students), BUILD=local (buildx + amd64
-# emulation, needs `docker run --privileged --rm tonistiigi/binfmt --install amd64` once),
+# emulation, needs `docker run --privileged --rm tonistiigi/binfmt:qemu-v9.2.2 --install amd64` once),
 # or SKIP_BUILD=1 with TAG=<existing tag> to redeploy an image already in the registry.
 if [ "${SKIP_BUILD:-0}" = 1 ]; then
   az acr repository show -n "$ACR" --image "hkrisk-api:$TAG" -o none
@@ -71,6 +71,10 @@ ENVVARS=(GEMINI_API_KEY=secretref:gemini-key HKRISK_API_KEY=secretref:agent-key
 
 if az containerapp show -n "$APP" -g "$RG" -o none 2>/dev/null; then
   echo "== update $APP"
+  # (re)grant AcrPull to the app identity: needed after the registry was deleted to save
+  # credit (hosting.sh off --delete-registry) and recreated above
+  az containerapp registry set -n "$APP" -g "$RG" --server "$ACR.azurecr.io" \
+    --identity system -o none
   az containerapp secret set -n "$APP" -g "$RG" \
     --secrets gemini-key="$GEMINI_KEY" agent-key="$AGENT_KEY" -o none
   az containerapp update -n "$APP" -g "$RG" --image "$IMAGE" \
@@ -87,4 +91,5 @@ else
 fi
 
 FQDN=$(az containerapp show -n "$APP" -g "$RG" --query properties.configuration.ingress.fqdn -o tsv)
-echo "== live at https://$FQDN"
+STATUS=$(az containerapp show -n "$APP" -g "$RG" --query properties.runningStatus -o tsv)
+echo "== deployed to https://$FQDN (app is $STATUS; start it with infra/azure/hosting.sh on)"

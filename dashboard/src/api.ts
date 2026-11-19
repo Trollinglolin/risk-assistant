@@ -1,5 +1,9 @@
 // Typed client for the FastAPI service (src/hkrisk/api/main.py).
 const BASE = (import.meta.env.VITE_API_BASE as string | undefined) ?? '/api'
+// Static build (GitHub Pages): no backend. Every response was pre-computed by
+// scripts/export_static.py into public/static-data/<key>.json.
+export const STATIC = import.meta.env.VITE_STATIC === '1'
+const staticKey = (p: string) => p.replace(/[^A-Za-z0-9._-]/g, '_').replace(/^_+/, '')
 const KEY_STORE = 'hkrisk-api-key'
 
 export const PORTFOLIOS = [
@@ -53,7 +57,7 @@ export function setStoredKey(k: string) {
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const r = await fetch(BASE + path, init)
+  const r = await fetch(STATIC ? `${import.meta.env.BASE_URL}static-data/${staticKey(path)}.json` : BASE + path, init)
   if (!r.ok) {
     let detail = r.statusText
     try { detail = (await r.json()).detail ?? detail } catch { /* not json */ }
@@ -106,6 +110,9 @@ export interface AgentResult {
   question: string; answer: string; tool_calls: ToolCall[]; iterations: number
   input_tokens: number; output_tokens: number; latency_s: number; provider: string; model: string
 }
+
+export const examples = () =>
+  fetch(`${import.meta.env.BASE_URL}static-data/agent_examples.json`).then((r) => r.json() as Promise<AgentResult[]>)
 
 export const api = {
   portfolio: (pf: PortfolioId) => request<Portfolio>('/portfolio' + qs({ portfolio: pf })),

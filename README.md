@@ -1,8 +1,8 @@
 # HK Market-Risk Assistant
 
-[![CI](https://github.com/Trollinglolin/riak-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/Trollinglolin/riak-assistant/actions/workflows/ci.yml)
+[![CI](https://github.com/Trollinglolin/risk-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/Trollinglolin/risk-assistant/actions/workflows/ci.yml)
 
-**Live demo:** https://hkrisk.jollymushroom-951ccee3.francecentral.azurecontainerapps.io. It is usually **switched off** to save cloud credit; see [Running it again](#running-it-again). The risk dashboard is public when it's on; the chat needs an access key because it spends LLM quota.
+**Live demo (static, always on):** https://trollinglolin.github.io/risk-assistant/. It is the full dashboard with every panel and slider, served from pre-computed results on GitHub Pages, so there is no backend and the chat shows recorded answers instead of a live model. A live copy with the working chat can be run on Azure; it is usually **switched off** to save cloud credit, see [Running it again](#running-it-again).
 
 A tested Python VaR / ES / GARCH / EVT engine for a portfolio of Hong Kong equities, with
 backtests (Kupiec, Christoffersen, Basel traffic light), risk attribution, stress tests, a
@@ -404,5 +404,19 @@ The AWS path below (Lambda + S3 + EventBridge) uses the same image and is docume
 - With 500 days, 99% historical ES rests on 5 points. EVT ξ is unstable on 25 exceedances
   (it is sometimes ≥ 1, which makes ES undefined).
 - Yahoo data is unofficial. The snapshot is frozen for reproducibility.
+- The price snapshots in `data/`, `tests/fixtures/` and `reference/` come from Yahoo Finance via `yfinance`. They are included only so the results can be reproduced; the data remains subject to Yahoo's terms and is not covered by this repo's MIT license. Not investment advice.
 - β-proxies for 2008 assume today's index beta held in a crisis, where correlations go to 1.
 - The backtest uses today's holdings throughout. It validates the model, not a past book.
+
+## Static demo on GitHub Pages
+
+`.github/workflows/pages.yml` rebuilds the site on every push to `main`: `scripts/export_static.py` runs the
+real API in-process for every parameter combination the dashboard can request (2 books x 5 methods x 3
+confidence levels, 81 Hang Seng shock sizes, 3 scenarios) and writes JSON to `dashboard/public/static-data/`;
+the dashboard is then built with `VITE_STATIC=1` so it reads those files instead of calling an API.
+To try it locally: `uv run python scripts/export_static.py && cd dashboard && VITE_STATIC=1 npm run build && npm run preview`.
+To enable it once: Settings > Pages > Source: **GitHub Actions**.
+
+## License
+
+Code is released under the [MIT License](LICENSE). Market data is not covered; see the limitations above.

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { ArrowUp, CaretRight, Key, Wrench } from '@phosphor-icons/react'
-import { ApiError, api, getStoredKey, setStoredKey, type AgentResult, type PortfolioId } from './api'
+import { ApiError, STATIC, api, examples, getStoredKey, setStoredKey, type AgentResult, type PortfolioId } from './api'
 
 const SUGGESTIONS = [
   "What's my 99% VaR and what drove it this week?",
@@ -16,6 +16,42 @@ type Turn =
   | { kind: 'err'; text: string; status?: number }
 
 export function Chat({ pf }: { pf: PortfolioId }) {
+  return STATIC ? <RecordedChat pf={pf} /> : <LiveChat pf={pf} />
+}
+
+/** Static (GitHub Pages) build: no backend, so show answers the live agent gave earlier. */
+function RecordedChat({ pf }: { pf: PortfolioId }) {
+  const [list, setList] = useState<AgentResult[] | null>(null)
+  const [open, setOpen] = useState<number | null>(0)
+  useEffect(() => { examples().then(setList).catch(() => setList([])) }, [])
+  return (
+    <section className="flex h-full min-h-[520px] flex-col rounded-lg border border-line bg-surface">
+      <header className="border-b border-line px-5 py-4">
+        <h2 className="text-[15px] font-semibold">Risk assistant: recorded answers</h2>
+        <p className="mt-0.5 text-[13px] text-muted">
+          This hosted copy has no backend, so the chat is off. These are real answers from the live
+          agent (every number comes from an engine tool call), recorded on the 9-name book. Run the
+          project locally to ask your own questions.
+        </p>
+      </header>
+      <div className="flex-1 space-y-3 overflow-y-auto px-5 py-4">
+        {pf !== 'core' && <p className="text-[13px] text-muted">Recorded on the Core 9 book.</p>}
+        {list === null && <div className="skeleton h-3 w-2/3" />}
+        {list?.map((r, i) => (
+          <div key={i}>
+            <button onClick={() => setOpen(open === i ? null : i)} aria-expanded={open === i}
+              className="w-full rounded-md border border-line bg-raised px-3 py-2 text-left text-[13px] text-ink-2 hover:border-accent hover:text-ink">
+              {r.question}
+            </button>
+            {open === i && <div className="mt-3"><Answer r={r} /></div>}
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function LiveChat({ pf }: { pf: PortfolioId }) {
   const [turns, setTurns] = useState<Turn[]>([])
   const [text, setText] = useState('')
   const [busy, setBusy] = useState(false)

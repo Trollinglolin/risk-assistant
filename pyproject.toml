@@ -1,8 +1,10 @@
 [project]
 name = "hkrisk"
 version = "0.1.0"
-description = "Add your description here"
+description = "Hong Kong equity market-risk engine (VaR/ES/GARCH/EVT) with a tool-grounded LLM agent"
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [
     { email = "205152841+Trollinglolin@users.noreply.github.com" }
 ]

@@ -79,6 +79,10 @@ def _client_ip(request: Request) -> str:
 async def guard(request: Request, call_next):
     if request.url.path != "/health":
         q, now = _ip_hits[_client_ip(request)], time.time()
+        if len(_ip_hits) > 10_000:  # evict idle clients so the table cannot grow without bound
+            for ip in [ip for ip, d in _ip_hits.items() if not d or now - d[-1] > 60]:
+                del _ip_hits[ip]
+            q = _ip_hits[_client_ip(request)]
         while q and now - q[0] > 60:
             q.popleft()
         if len(q) >= IP_LIMIT:

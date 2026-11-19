@@ -9,6 +9,8 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '..', '')
   const apiKey = env.HKRISK_API_KEY
   return {
+    // GitHub Pages serves a project site from /<repo>/, so the static build sets VITE_BASE
+    base: process.env.VITE_BASE ?? '/',
     plugins: [react(), tailwindcss()],
     server: {
       proxy: {

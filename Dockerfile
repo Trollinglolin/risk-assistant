@@ -1,4 +1,4 @@
-# Two Lambda images from one build:
+# Two images from one build (the `api` image runs on Azure Container Apps or AWS Lambda; `report` is Lambda-only):
 #   docker build --target api    -t hkrisk-api .     (FastAPI via AWS Lambda Web Adapter)
 #   docker build --target report -t hkrisk-report .  (plain Lambda handler hkrisk.report.handler)
 # No secrets are baked in: LLM keys and HKRISK_API_KEY come from SSM / Secrets Manager at run
